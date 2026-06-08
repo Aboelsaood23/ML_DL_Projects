@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+
+  backend:
+    build:
+      context: .
+      dockerfile: Docker/Dockerfile.backend
+    ports:
+      - "8000:8000"
+
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Docker/Dockerfile.frontend
+    ports:
+      - "8501:8501"
+    depends_on:
+      - backend
+    environment:
+      - FASTAPI_URL=http://backend:8000/predict
