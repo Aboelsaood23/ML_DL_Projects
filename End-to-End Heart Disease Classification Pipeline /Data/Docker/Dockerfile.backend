@@ -1,0 +1,19 @@
+#this line download light version of linux , contain python installed on it , it also download tools needed to run python
+FROM python:3.11-slim  
+
+#creates folder called app inside your virtual machine
+#to avoid files scattering
+WORKDIR /app 
+
+COPY requirements.txt .
+
+#cache is not necessary 
+RUN pip install --no-cache-dir -r requirements.txt
+
+#copy resources 
+COPY ./SRC ./SRC
+COPY ./models ./models
+
+EXPOSE 8000
+
+CMD ["uvicorn", "SRC.app:app", "--host", "0.0.0.0", "--port", "8000"]
